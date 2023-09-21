@@ -7,6 +7,6 @@ void *naive_malloc(size_t size)
 
     ptr = (size_t *)sbrk(0);
     sbrk(size + sizeof(size_t));
-    
+    *ptr = size + sizeof(size_t);
     return (void *)(ptr + 1);
 }
