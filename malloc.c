@@ -10,6 +10,7 @@ void *_malloc(size_t size)
 	void *ptr;
 	static void *heap_start, *chunk_start;
 	static size_t unused;
+	size_t *ptrsize;
 
 	if (heap_start == NULL)
 		heap_start = sbrk(0);
@@ -32,7 +33,8 @@ void *_malloc(size_t size)
 	ptr = chunk_start;
 	chunk_start = (char *)chunk_start + size + sizeof(size_t);
 	unused -= size;
-	*((size_t *)ptr) = size;
+	size_ptr = (size_t *)ptr;
+    *size_ptr = size;
 	ptr = (char *)ptr + sizeof(size_t);
 
 	return (ptr);
