@@ -5,7 +5,7 @@
 * Return: pointer to allocated memory
 */
 
-void *malloc(size_t size)
+void *_malloc(size_t size)
 {
 	void *ptr;
 	static void *heap_start, *chunk_start;
