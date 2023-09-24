@@ -23,5 +23,5 @@ void *naive_malloc(size_t size)
     *((size_t*)ptr) = size;
     ptr = (char*)ptr + sizeof(size_t);
 
-    return (ptr + sizeof(size_t));
+    return (ptr);
 }
