@@ -8,8 +8,8 @@
 void *naive_malloc(size_t size)
 {
 	void *ptr;
-	static void *heap_start = NULL, *chunk_start = NULL;
-	static size_t unused = 0;
+	static void *heap_start, *chunk_start;
+	static size_t unused;
 
 	if (heap_start == NULL || unused < size)
 	{
@@ -20,12 +20,12 @@ void *naive_malloc(size_t size)
 	}
 	if (size % 8 != 0)
 		size += 8 - (size % 8);
-	
+
 	ptr = chunk_start;
 	chunk_start = (char *)chunk_start + size + sizeof(size_t);
-	unused =- size;
-	*((size_t*)ptr) = size;
-	ptr = (char*)ptr + sizeof(size_t);
+	unused = -size;
+	*((size_t *)ptr) = size;
+	ptr = (char *)ptr + sizeof(size_t);
 
 	return (ptr);
 }
