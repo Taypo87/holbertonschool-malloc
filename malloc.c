@@ -21,6 +21,11 @@ void *_malloc(size_t size)
 		else
 			sbrk(sysconf(_SC_PAGESIZE));
 	}
+	while (unused < size)
+	{
+		sbrk(sysconf(_SC_PAGESIZE));
+		unused += sysconf(_SC_PAGESIZE);
+	}
 	if (size % 8 != 0)
 		size += 8 - (size % 8);
 
