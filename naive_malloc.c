@@ -3,10 +3,25 @@
 
 void *naive_malloc(size_t size)
 {
-    size_t *ptr;
+    void *ptr;
+    static void *heap_start = NULL, *chunk_start = NULL;
+    static size_t unused = 0;
 
-    ptr = (size_t *)sbrk(0);
-    sbrk(size + sizeof(size_t));
-    *ptr = size + sizeof(size_t);
-    return (void *)(ptr + 1);
+    if (heap_start == NULL || unused < size)
+    {
+        if (heap_start == NULL)
+            heap_start = sbrk(0);
+        unused += sysconf(_SC_PAGESIZE);
+        chunk_start = sbrk(sysconf(_SC_PAGESIZE));
+    }
+    if (size + sizeof(size_t) % 8 != 0)
+        size += 8 - (size + sizeof(size_t) % 8);
+    
+    ptr = chunk_start;
+    chunk_start = (char *)chunk_start + size + sizeof(size_t);
+    unused =- size;
+    *((size_t*)ptr) = size;
+    ptr = (char*)ptr + sizeof(size_t);
+
+    return (ptr + sizeof(size_t));
 }
