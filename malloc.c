@@ -10,7 +10,7 @@ void *_malloc(size_t size)
 	void *ptr;
 	static void *heap_start, *chunk_start;
 	static size_t unused;
-	size_t *ptrsize;
+	size_t *size_ptr;
 
 	if (heap_start == NULL)
 		heap_start = sbrk(0);
