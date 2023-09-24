@@ -1,6 +1,6 @@
 #include "malloc.h"
 /**
-* naive_malloc - allocates memory
+* _malloc - allocates memory
 * @size: size of memory to allocate
 * Return: pointer to allocated memory
 */
@@ -16,7 +16,10 @@ void *_malloc(size_t size)
 	if (!unused	|| unused < size)
 	{
 		unused += sysconf(_SC_PAGESIZE);
-		chunk_start = sbrk(sysconf(_SC_PAGESIZE));
+		if (!chunk_start)
+			chunk_start = sbrk(sysconf(_SC_PAGESIZE));
+		else
+			sbrk(sysconf(_SC_PAGESIZE));
 	}
 	if (size % 8 != 0)
 		size += 8 - (size % 8);
