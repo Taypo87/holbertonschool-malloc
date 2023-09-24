@@ -31,7 +31,7 @@ void *_malloc(size_t size)
 
 	ptr = chunk_start;
 	chunk_start = (char *)chunk_start + size + sizeof(size_t);
-	unused = -size;
+	unused -= size;
 	*((size_t *)ptr) = size;
 	ptr = (char *)ptr + sizeof(size_t);
 
