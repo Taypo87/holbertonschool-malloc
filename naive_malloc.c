@@ -6,7 +6,6 @@ void *naive_malloc(size_t size)
     void *ptr;
     static void *heap_start = NULL, *chunk_start = NULL;
     static size_t unused = 0;
-    size_t padding;
 
     if (heap_start == NULL || unused < size)
     {
