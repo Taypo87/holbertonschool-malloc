@@ -20,7 +20,7 @@ void *_malloc(size_t size)
 	}
 	if (!chunk_start)
 		chunk_start = heap_start;
-	
+
 	while (size % 8 != 0)
 	{
 		size++;
@@ -30,12 +30,12 @@ void *_malloc(size_t size)
 		sbrk(sysconf(_SC_PAGESIZE));
 		unused += sysconf(_SC_PAGESIZE);
 	}
-	
+
 	ptr = chunk_start;
-    chunk_start = (char *)chunk_start + size + sizeof(size_t);
-    unused -= (size + sizeof(size_t));
-    *((size_t*)ptr) = size;
-    ptr = (char*)ptr + sizeof(size_t);
+	chunk_start = (char *)chunk_start + size + sizeof(size_t);
+	unused -= (size + sizeof(size_t));
+	*((size_t *)ptr) = size;
+	ptr = (char *)ptr + sizeof(size_t);
 
 	return (ptr);
 }
