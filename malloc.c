@@ -28,9 +28,9 @@ void *_malloc(size_t size)
 		size++;
 	}
 	ptr = chunk_start;
-	chunk_start = (char *)chunk_start + size + sizeof(size_t);
-	unused -= size;
-	 *((size_t*)ptr) = size;
-	ptr = (char *)ptr + sizeof(size_t);
+    chunk_start = (char *)chunk_start + size + sizeof(size_t);
+    unused =- size;
+    *((size_t*)ptr) = size;
+    ptr = (char*)ptr + sizeof(size_t);
 	return (ptr);
 }
