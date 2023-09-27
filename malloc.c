@@ -7,7 +7,7 @@
 
 void *_malloc(size_t size)
 {
-	struct headers *header;
+	headers *header;
 	void *ptr;
 	static void *heap_start, *chunk_start, *heap_end, *chunks[MAX_BLOCKS];
 	static size_t unused, total_chunks;
@@ -28,8 +28,8 @@ void *_malloc(size_t size)
 	}
 	for (i = 0; i <= total_chunks; i++)
 	{
-		header = (struct headers *)chunks[i] - 1;
-		if (header->my_size == 0 && chunk_size >= size + sizeof(headers))
+		header = ((struct headers*)ptr) - 1;
+		if (header->my_size == 0 && header->chunk_size >= size + sizeof(headers))
 		{
 			header->my_size = size;
 			return (chunks[i]);

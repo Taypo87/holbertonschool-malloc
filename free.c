@@ -2,11 +2,11 @@
 
 void _free(void *ptr)
 {
-    headers header;
+    headers *header;
 
     if (ptr)
     {
-        header = (headers *)ptr - 1;
+        header = ((struct headers*)ptr) - 1;
         header->my_size = 0;
     }
 }
