@@ -26,13 +26,16 @@ void *_malloc(size_t size)
 	{
 		size++;
 	}
-	for (i = 0; i <= total_chunks; i++)
+	if (total_chunks)
 	{
-		header = ((struct headers*)ptr) - 1;
-		if (header->my_size == 0 && header->chunk_size >= size + sizeof(headers))
+		for (i = 0; i <= total_chunks; i++)
 		{
-			header->my_size = size;
-			return (chunks[i]);
+			header = ((struct headers*)ptr) - 1;
+			if (header->my_size == 0 && header->chunk_size >= size + sizeof(headers))
+			{
+				header->my_size = size;
+				return (chunks[i]);
+			}
 		}
 	}
 	while (unused < (size + sizeof(size_t)))
