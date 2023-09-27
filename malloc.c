@@ -28,9 +28,9 @@ void *_malloc(size_t size)
 	}
 	if (total_chunks)
 	{
-		for (i = 0; i <= total_chunks; i++)
+		for (i = 0; i < total_chunks; i++)
 		{
-			header = ((struct headers*)ptr) - 1;
+			header = ((struct headers*)chunks[i]) - 1;
 			if (header->my_size == 0 && header->chunk_size >= size + sizeof(headers))
 			{
 				header->my_size = size;
@@ -38,7 +38,7 @@ void *_malloc(size_t size)
 			}
 		}
 	}
-	while (unused < (size + sizeof(size_t)))
+	while (unused < (size + sizeof(headers)))
 	{
 		sbrk(sysconf(_SC_PAGESIZE));
 		unused += sysconf(_SC_PAGESIZE);
@@ -52,6 +52,7 @@ void *_malloc(size_t size)
 	unused -= (size + sizeof(headers));
 	*((size_t *)ptr) = size;
 	ptr = (char *)ptr + sizeof(headers);
+	chunks[total_chunks - 1] = ptr;
 
 	return (ptr);
 }
