@@ -13,7 +13,7 @@ void *_malloc(size_t size)
 	static size_t unused, total_chunks;
 	size_t i;
 
-// start-up code block
+
 	if (!heap_start)
 	{
 		heap_start = sbrk(0);
@@ -26,7 +26,6 @@ void *_malloc(size_t size)
 	{
 		size++;
 	}
-// check for available chunks before allocated a new one
 	for (i = 0; i <= total_chunks; i++)
 	{
 		header = (struct headers *)chunks[i] - 1;
@@ -36,9 +35,6 @@ void *_malloc(size_t size)
 			return (chunks[i]);
 		}
 	}
-// if we add a new chunk, total_chunks++ to keep our end place in array of pointers
-
-	// code for new chunk
 	while (unused < (size + sizeof(size_t)))
 	{
 		heap_end = sbrk(sysconf(_SC_PAGESIZE));
