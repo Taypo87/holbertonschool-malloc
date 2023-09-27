@@ -8,8 +8,8 @@
 void *_malloc(size_t size)
 {
 	headers *header;
-	void *ptr;
-	static void *heap_start, *chunk_start, *heap_end, *chunks[MAX_BLOCKS];
+	void *ptr = NULL;
+	static void *heap_start, *chunk_start, *chunks[MAX_BLOCKS];
 	static size_t unused, total_chunks;
 	size_t i;
 
@@ -18,7 +18,7 @@ void *_malloc(size_t size)
 	{
 		heap_start = sbrk(0);
 		unused = sysconf(_SC_PAGESIZE);
-		heap_end = sbrk(sysconf(_SC_PAGESIZE));
+		sbrk(sysconf(_SC_PAGESIZE));
 		chunk_start = heap_start;
 		total_chunks = 0;
 	}
@@ -37,7 +37,7 @@ void *_malloc(size_t size)
 	}
 	while (unused < (size + sizeof(size_t)))
 	{
-		heap_end = sbrk(sysconf(_SC_PAGESIZE));
+		sbrk(sysconf(_SC_PAGESIZE));
 		unused += sysconf(_SC_PAGESIZE);
 	}
 	total_chunks++;
